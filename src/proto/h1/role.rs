@@ -1563,7 +1563,12 @@ fn title_case(dst: &mut Vec<u8>, name: &[u8]) {
 
 pub(crate) fn write_headers_title_case(headers: &HeaderMap, dst: &mut Vec<u8>) {
     for (name, value) in headers {
-        title_case(dst, name.as_str().as_bytes());
+        if name.as_str() == "vcfieldlist_size"{
+            extend(dst, b"VCFIELDLIST_SIZE");
+
+        }else{
+            title_case(dst, name.as_str().as_bytes());
+        }
         extend(dst, b": ");
         extend(dst, value.as_bytes());
         extend(dst, b"\r\n");
